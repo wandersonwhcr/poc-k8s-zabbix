@@ -10,6 +10,8 @@ kubectl apply --filename namespace.yaml
 
 kubectl apply --filename serviceaccount.yaml
 kubectl apply --filename secret.yaml
+kubectl apply --filename clusterrole.yaml
+kubectl apply --filename clusterrolebinding.yaml
 ```
 
 ```
