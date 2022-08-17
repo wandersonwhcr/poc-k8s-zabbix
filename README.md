@@ -10,4 +10,12 @@ kubectl apply --filename namespace.yaml
 
 kubectl apply --filename serviceaccount.yaml
 kubectl apply --filename secret.yaml
+
+kubectl get secret zabbix-token \
+    --namespace zabbix \
+    --output json \
+    | jq '.data' > zabbix-token.json
+
+jq '.["ca.crt"] | @base64d' zabbix-token.json --raw-output > ca.crt
+jq '.["token"]  | @base64d' zabbix-token.json --raw-output > token
 ```
