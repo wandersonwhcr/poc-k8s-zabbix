@@ -2,6 +2,8 @@
 
 Proof of Concept for Kubernetes and Zabbix Monitoring
 
+## Install
+
 ```
 k3d cluster create \
     --config k3d-cluster.yaml
@@ -13,6 +15,8 @@ kubectl apply --filename secret.yaml
 kubectl apply --filename clusterrole.yaml
 kubectl apply --filename clusterrolebinding.yaml
 ```
+
+## Authorization
 
 ```
 kubectl get secret zabbix-token \
@@ -32,6 +36,8 @@ KUBERNETES_API=`cat kubernetes-api`
 TOKEN=`cat token`
 ```
 
+## List Nodes
+
 ```
 curl "$KUBERNETES_API/api/v1/nodes" \
     --fail --silent \
@@ -45,6 +51,8 @@ curl "$KUBERNETES_API/api/v1/nodes" \
 "k3d-cluster-agent-1"
 "k3d-cluster-agent-2"
 ```
+
+## List Namespaces
 
 ```
 curl "$KUBERNETES_API/api/v1/namespaces" \
@@ -60,6 +68,8 @@ curl "$KUBERNETES_API/api/v1/namespaces" \
 "kube-system"
 "zabbix"
 ```
+
+## List Pods
 
 ```
 curl "$KUBERNETES_API/api/v1/pods" \
@@ -81,6 +91,8 @@ curl "$KUBERNETES_API/api/v1/pods" \
 {"namespace":"kube-system","name":"svclb-traefik-dxpgd"}
 {"namespace":"kube-system","name":"traefik-df4ff85d6-d5k2b"}
 ```
+
+## List ReplicaSets
 
 ```
 curl "$KUBERNETES_API/apis/apps/v1/replicasets" \
