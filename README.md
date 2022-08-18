@@ -81,3 +81,18 @@ curl "$KUBERNETES_API/api/v1/pods" \
 {"namespace":"kube-system","name":"svclb-traefik-dxpgd"}
 {"namespace":"kube-system","name":"traefik-df4ff85d6-d5k2b"}
 ```
+
+```
+curl "$KUBERNETES_API/apis/apps/v1/replicasets" \
+    --fail --silent --show-error \
+    --cacert ./ca.crt \
+    --header "Authorization: Bearer $TOKEN" \
+    | jq '.items[].metadata' \
+    | jq --slurp 'sort_by(.namespace, .name) | .[]' \
+    | jq '{ "namespace": .namespace, "name": .name }' --compact-output
+
+{"namespace":"kube-system","name":"coredns-d76bd69b"}
+{"namespace":"kube-system","name":"local-path-provisioner-6c79684f77"}
+{"namespace":"kube-system","name":"metrics-server-7cd5fcb6b7"}
+{"namespace":"kube-system","name":"traefik-df4ff85d6"}
+```
