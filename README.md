@@ -108,3 +108,9 @@ curl "$KUBERNETES_API/apis/apps/v1/replicasets" \
 {"namespace":"kube-system","name":"metrics-server-7cd5fcb6b7"}
 {"namespace":"kube-system","name":"traefik-df4ff85d6"}
 ```
+
+## Zabbix Infrastructure
+
+```
+docker-compose up --detach
+```

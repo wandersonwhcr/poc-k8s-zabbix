@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+
+  mysql:
+    image: "mysql:8.0"
+    command:
+      - "--default-authentication-plugin=mysql_native_password"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: zabbix
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  zabbix-server:
+    image: "zabbix/zabbix-server-mysql:5.0-alpine"
+    environment:
+      DB_SERVER_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+
+  zabbix-web:
+    image: "zabbix/zabbix-web-nginx-mysql:5.0-alpine"
+    environment:
+      DB_SERVER_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: zabbix
+    ports:
+      - "8080:8080"
+
+volumes:
+  mysql-data:
