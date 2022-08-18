@@ -40,9 +40,9 @@ TOKEN=`cat token`
 
 ```
 curl "$KUBERNETES_API/api/v1/nodes" \
-    --fail --silent \
+    --fail --silent --show-error \
     --cacert ./ca.crt \
-    --header "Authorization: Bearer $TOKEN" \
+    --oauth2-bearer "$TOKEN" \
     | jq '.items[].metadata.name' \
     | sort --numeric-sort
 
@@ -56,9 +56,9 @@ curl "$KUBERNETES_API/api/v1/nodes" \
 
 ```
 curl "$KUBERNETES_API/api/v1/namespaces" \
-    --fail --silent \
+    --fail --silent --show-error \
     --cacert ./ca.crt \
-    --header "Authorization: Bearer $TOKEN" \
+    --oauth2-bearer "$TOKEN" \
     | jq '.items[].metadata.name' \
     | sort --numeric-sort
 
@@ -73,9 +73,9 @@ curl "$KUBERNETES_API/api/v1/namespaces" \
 
 ```
 curl "$KUBERNETES_API/api/v1/pods" \
-    --fail --silent \
+    --fail --silent --show-error \
     --cacert ./ca.crt \
-    --header "Authorization: Bearer $TOKEN" \
+    --oauth2-bearer "$TOKEN" \
     | jq '.items[].metadata' \
     | jq --slurp 'sort_by(.namespace, .name) | .[]' \
     | jq '{ "namespace": .namespace, "name": .name }' --compact-output
@@ -98,7 +98,7 @@ curl "$KUBERNETES_API/api/v1/pods" \
 curl "$KUBERNETES_API/apis/apps/v1/replicasets" \
     --fail --silent --show-error \
     --cacert ./ca.crt \
-    --header "Authorization: Bearer $TOKEN" \
+    --oauth2-bearer "$TOKEN" \
     | jq '.items[].metadata' \
     | jq --slurp 'sort_by(.namespace, .name) | .[]' \
     | jq '{ "namespace": .namespace, "name": .name }' --compact-output
